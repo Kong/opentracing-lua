@@ -1,0 +1,45 @@
+language: python
+
+sudo: false
+
+env:
+  matrix:
+    - LUA="lua 5.1"
+    - LUA="lua 5.2"
+    - LUA="lua 5.3"
+    - LUA="lua 5.3"    COMPAT53=no
+    - LUA="luajit @"
+    - LUA="luajit 2.0"
+    - LUA="luajit 2.1"
+
+branches:
+  only:
+    - master
+
+before_install:
+  - pip install hererocks
+  - hererocks ~/hererocks -r^ --$LUA --cflags=$LUA_CFLAGS
+  - export PATH=$PATH:~/hererocks/bin
+  - eval $(luarocks path --bin)
+  - luarocks install luacheck
+  - luarocks install luacov-coveralls
+  - luarocks install busted
+
+install:
+  - luarocks install --only-deps opentracing-scm-0.rockspec
+
+script:
+  - luacheck .
+  - busted -c
+
+after_success:
+  - luacov-coveralls -v
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+
+cache:
+  directories:
+    - $HOME/.cache/hererocks
