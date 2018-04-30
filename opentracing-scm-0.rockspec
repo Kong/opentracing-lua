@@ -12,10 +12,15 @@ description = {
 }
 
 dependencies = {
+	"luatz";
+	"luaossl";
 }
 
 build = {
 	type = "builtin";
 	modules = {
+		["opentracing.span"] = "opentracing/span.lua";
+		["opentracing.span_context"] = "opentracing/span_context.lua";
+		["opentracing.tracer"] = "opentracing/tracer.lua";
 	};
 }
