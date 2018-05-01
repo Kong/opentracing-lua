@@ -60,6 +60,12 @@ describe("opentracing.span", function()
 			error("unreachable")
 		end
 	end)
+	it("can :get_tag", function()
+		local span = new_span(tracer, context, "foo", 0)
+		assert.same(nil, span:get_tag("http.method"))
+		span:set_tag("http.method", "GET")
+		assert.same("GET", span:get_tag("http.method"))
+	end)
 	it("can iterate over tags", function()
 		local span = new_span(tracer, context, "foo", 0)
 		local tags = {
