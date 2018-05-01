@@ -67,7 +67,7 @@ describe("opentracing.span", function()
 			["http.url"] = "https://example.com/";
 		}
 		for k, v in pairs(tags) do
-			span:tag(k, v)
+			span:set_tag(k, v)
 		end
 		local seen = {}
 		for k, v in span:each_tag() do

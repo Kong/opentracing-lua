@@ -51,7 +51,7 @@ function span_methods:finish(finish_timestamp)
 	return true
 end
 
-function span_methods:tag(key, value)
+function span_methods:set_tag(key, value)
 	assert(type(key) == "string", "invalid tag key")
 	do -- Validate value
 		local vt = type(value)

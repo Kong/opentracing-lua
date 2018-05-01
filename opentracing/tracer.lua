@@ -81,12 +81,12 @@ function tracer_methods:start_span(name, options)
 	local span = opentracing_span.new(self, context, name, start_timestamp)
 	if extra_tags then
 		for k, v in pairs(extra_tags) do
-			span:tag(k, v)
+			span:set_tag(k, v)
 		end
 	end
 	if tags then
 		for k, v in pairs(tags) do
-			span:tag(k, v)
+			span:set_tag(k, v)
 		end
 	end
 	return span
