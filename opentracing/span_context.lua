@@ -36,9 +36,7 @@ local function new(trace_id, span_id, parent_id, should_sample)
 	else
 		assert(type(span_id) == "string", "invalid span id")
 	end
-	if parent_id == nil then
-		parent_id = generate_span_id()
-	else
+	if parent_id ~= nil then
 		assert(type(parent_id) == "string", "invalid parent id")
 	end
 	return setmetatable({
