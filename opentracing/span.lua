@@ -136,6 +136,9 @@ function span_methods:get_baggage(key)
 	return self.context:get_baggage(key)
 end
 
+function span_methods:each_baggage()
+	return self.context:each_baggage()
+end
 
 return {
 	new = new;

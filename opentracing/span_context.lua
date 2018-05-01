@@ -89,6 +89,12 @@ function span_context_methods:get_baggage(key)
 	end
 end
 
+function span_context_methods:each_baggage()
+	local baggage = self.baggage
+	if baggage == nil then return function() end end
+	return next, baggage
+end
+
 return {
 	new = new;
 	is = is;

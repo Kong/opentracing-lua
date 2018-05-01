@@ -119,4 +119,19 @@ describe("opentracing.span", function()
 		span:set_baggage("foo", "other")
 		assert.same("other", span:get_baggage("foo"))
 	end)
+	it("can iterator over baggage", function()
+		local span = new_span(tracer, context, "foo", 0)
+		local baggage = {
+			["baggage1"] = "value1";
+			["baggage2"] = "value2";
+		}
+		for k, v in pairs(baggage) do
+			span:set_baggage(k, v)
+		end
+		local seen = {}
+		for k, v in span:each_baggage() do
+			seen[k] = v
+		end
+		assert.same(baggage, seen)
+	end)
 end)
