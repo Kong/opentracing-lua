@@ -24,6 +24,13 @@ local function is(object)
 	return getmetatable(object) == span_context_mt
 end
 
+local baggage_mt = {
+	__name = "opentracing.span_context.baggage";
+	__newindex = function()
+		error("attempt to set immutable baggage")
+	end;
+}
+
 -- Public constructor
 local function new(trace_id, span_id, parent_id, should_sample)
 	if trace_id == nil then
@@ -75,7 +82,7 @@ function span_context_methods:clone_with_extra_baggage(key, value)
 		span_id = self.span_id;
 		parent_id = self.parent_id;
 		should_sample = self.should_sample;
-		baggage = new_baggage;
+		baggage = setmetatable(new_baggage, baggage_mt);
 	}, span_context_mt)
 end
 
