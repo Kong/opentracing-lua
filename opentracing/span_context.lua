@@ -67,7 +67,7 @@ function span_context_methods:child()
 end
 
 -- New from existing but with an extra baggage item
-function span_context_methods:clone_with_extra_baggage(key, value)
+function span_context_methods:clone_with_baggage_item(key, value)
 	assert(type(key) == "string", "invalid baggage key")
 	assert(type(value) == "string", "invalid baggage value")
 	local new_baggage = {}

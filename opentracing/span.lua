@@ -127,7 +127,7 @@ end
 
 function span_methods:set_baggage(key, value)
 	-- Create new context so that baggage is immutably passed around
-	local newcontext = self.context:clone_with_extra_baggage(key, value)
+	local newcontext = self.context:clone_with_baggage_item(key, value)
 	self.context = newcontext
 	return true
 end
