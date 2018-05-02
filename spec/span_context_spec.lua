@@ -22,4 +22,15 @@ describe("opentracing.span_context", function()
 			new_context(nil, nil, {})
 		end)
 	end)
+	it("allows constructing with baggage items", function()
+		local baggage_arg = {
+			foo = "bar";
+			somekey = "some value";
+		}
+		local context = new_context(nil, nil, nil, nil, baggage_arg)
+		assert.same("bar", context:get_baggage("foo"))
+		assert.same("some value", context:get_baggage("somekey"))
+		baggage_arg.modified = "other"
+		assert.same(nil, context:get_baggage("modified"))
+	end)
 end)

@@ -32,7 +32,7 @@ local baggage_mt = {
 }
 
 -- Public constructor
-local function new(trace_id, span_id, parent_id, should_sample)
+local function new(trace_id, span_id, parent_id, should_sample, baggage)
 	if trace_id == nil then
 		trace_id = generate_trace_id()
 	else
@@ -46,12 +46,21 @@ local function new(trace_id, span_id, parent_id, should_sample)
 	if parent_id ~= nil then
 		assert(type(parent_id) == "string", "invalid parent id")
 	end
+	if baggage then
+		local new_baggage = {}
+		for key, value in pairs(baggage) do
+			assert(type(key) == "string", "invalid baggage key")
+			assert(type(value) == "string", "invalid baggage value")
+			new_baggage[key] = value
+		end
+		baggage = setmetatable(new_baggage, baggage_mt)
+	end
 	return setmetatable({
 		trace_id = trace_id;
 		span_id = span_id;
 		parent_id = parent_id;
 		should_sample = should_sample;
-		baggage = nil;
+		baggage = baggage;
 	}, span_context_mt)
 end
 
