@@ -35,6 +35,13 @@ local function new(tracer, context, name, start_timestamp)
 	}, span_mt)
 end
 
+function span_methods:start_child_span(name, start_timestamp)
+	return self.tracer:start_span(name, {
+		start_timestamp = start_timestamp;
+		child_of = self;
+	})
+end
+
 function span_methods:finish(finish_timestamp)
 	assert(self.duration == nil, "span already finished")
 	if finish_timestamp == nil then
