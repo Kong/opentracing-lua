@@ -1,8 +1,9 @@
 package = "opentracing"
-version = "scm-0"
+version = "0.0.1-0"
 
 source = {
-	url = "git+https://github.com/kong/opentracing-lua.git";
+	url = "https://github.com/kong/opentracing-lua/archive/v0.0.1.zip";
+	dir = "opentracing-lua-0.0.1";
 }
 
 description = {
