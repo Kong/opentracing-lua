@@ -20,6 +20,7 @@ dependencies = {
 build = {
 	type = "builtin";
 	modules = {
+		["opentracing"] = "opentracing/init.lua";
 		["opentracing.span"] = "opentracing/span.lua";
 		["opentracing.span_context"] = "opentracing/span_context.lua";
 		["opentracing.tracer"] = "opentracing/tracer.lua";
