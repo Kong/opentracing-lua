@@ -62,7 +62,8 @@ function span_methods:set_tag(key, value)
 	assert(type(key) == "string", "invalid tag key")
 	if value ~= nil then -- Validate value
 		local vt = type(value)
-		assert(vt == "string" or vt == "number" or vt == "boolean", "invalid tag value")
+		assert(vt == "string" or vt == "number" or vt == "boolean",
+			"invalid tag value (expected string, number, boolean or nil)")
 	end
 	local tags = self.tags
 	if tags then
