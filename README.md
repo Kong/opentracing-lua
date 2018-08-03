@@ -8,6 +8,15 @@ To fully understand this platform API, it's helpful to be familiar with the [Ope
 [terminology](http://opentracing.io/documentation/pages/spec.html) more specifically.
 
 
+## Quick Start
+
+Install the package using `luarocks`
+
+```bash
+luarocks install opentracing
+```
+
+
 ## Conventions
 
   - All timestamps are in seconds
