@@ -1,3 +1,8 @@
+UNRELEASED
+
+  - Allow unsetting a tag with :set_tag(k, nil)
+
+
 0.0.1 - 2018-05-18
 
   - Initial release
