@@ -1,4 +1,4 @@
-UNRELEASED
+0.0.2 - 2018-08-09
 
   - Allow unsetting a tag with :set_tag(k, nil)
   - Add span:tracer() to get a span's tracer object
