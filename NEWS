@@ -3,6 +3,7 @@ UNRELEASED
   - Allow unsetting a tag with :set_tag(k, nil)
   - Add span:tracer() to get a span's tracer object
   - Add span:context() to get a span's span_context
+  - Add span:set_operation_name()
 
 
 0.0.1 - 2018-05-18

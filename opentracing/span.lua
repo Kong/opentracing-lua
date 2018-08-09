@@ -43,6 +43,11 @@ function span_methods:tracer()
 	return self.tracer_
 end
 
+function span_methods:set_operation_name(name)
+	assert(type(name) == "string", "name should be a string")
+	self.name = name
+end
+
 function span_methods:start_child_span(name, start_timestamp)
 	return self.tracer_:start_span(name, {
 		start_timestamp = start_timestamp;
