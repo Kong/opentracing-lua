@@ -33,8 +33,10 @@ describe("opentracing.span", function()
 		local span = new_span(mock_tracer, context, "foo", 0)
 		span:log("key", "value")
 		assert.spy(mock_tracer.time).was.called(1)
-		span:finish()
+		span:log_kv{key = "value"}
 		assert.spy(mock_tracer.time).was.called(2)
+		span:finish()
+		assert.spy(mock_tracer.time).was.called(3)
 	end)
 	it("doesn't allow constructing with invalid timestamp", function()
 		assert.has.errors(function()
@@ -129,6 +131,20 @@ describe("opentracing.span", function()
 		local seen = {}
 		for k, v, t in span:each_log() do
 			assert.same(v*10, t)
+			seen[k] = v
+		end
+		assert.same(logs, seen)
+	end)
+	it("logs are created with :log_kv", function()
+		local span = new_span(tracer, context, "foo", 0)
+		local logs = {
+			["thing1"] = 1000;
+			["thing2"] = 1001;
+		}
+		span:log_kv(logs, 1234)
+		local seen = {}
+		for k, v, t in span:each_log() do
+			assert.same(1234, t)
 			seen[k] = v
 		end
 		assert.same(logs, seen)

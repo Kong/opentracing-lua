@@ -4,6 +4,7 @@ UNRELEASED
   - Add span:tracer() to get a span's tracer object
   - Add span:context() to get a span's span_context
   - Add span:set_operation_name()
+  - Add span:log_kv() to log key/value pairs in a single call
 
 
 0.0.1 - 2018-05-18

@@ -134,6 +134,36 @@ function span_methods:log(key, value, timestamp)
 	return true
 end
 
+function span_methods:log_kv(key_values, timestamp)
+	if timestamp == nil then
+		timestamp = self.tracer_:time()
+	else
+		assert(type(timestamp) == "number", "invalid timestamp for log")
+	end
+
+	local logs = self.logs
+	local n_logs
+	if logs then
+		n_logs = 0
+	else
+		n_logs = self.n_logs
+		logs = { }
+		self.logs = logs
+	end
+
+	for key, value in pairs(key_values) do
+		n_logs = n_logs + 1
+		logs[n_logs] = {
+			key = key;
+			value = value;
+			timestamp = timestamp;
+		}
+	end
+
+	self.n_logs = n_logs
+	return true
+end
+
 function span_methods:each_log()
 	local i = 0
 	return function(logs)
