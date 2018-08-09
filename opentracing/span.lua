@@ -176,19 +176,19 @@ function span_methods:each_log()
 	end, self.logs
 end
 
-function span_methods:set_baggage(key, value)
+function span_methods:set_baggage_item(key, value)
 	-- Create new context so that baggage is immutably passed around
 	local newcontext = self.context_:clone_with_baggage_item(key, value)
 	self.context_ = newcontext
 	return true
 end
 
-function span_methods:get_baggage(key)
-	return self.context_:get_baggage(key)
+function span_methods:get_baggage_item(key)
+	return self.context_:get_baggage_item(key)
 end
 
-function span_methods:each_baggage()
-	return self.context_:each_baggage()
+function span_methods:each_baggage_item()
+	return self.context_:each_baggage_item()
 end
 
 return {

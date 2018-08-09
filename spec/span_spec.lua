@@ -152,17 +152,17 @@ describe("opentracing.span", function()
 	it("tracks baggage", function()
 		local span = new_span(tracer, context, "name", 0)
 		-- New span shouldn't have any baggage
-		assert.same(nil, span:get_baggage("foo"))
+		assert.same(nil, span:get_baggage_item("foo"))
 		-- Check normal case
-		span:set_baggage("foo", "bar")
-		assert.same("bar", span:get_baggage("foo"))
+		span:set_baggage_item("foo", "bar")
+		assert.same("bar", span:get_baggage_item("foo"))
 		-- Make sure adding a new key doesn't remove old ones
-		span:set_baggage("mykey", "myvalue")
-		assert.same("bar", span:get_baggage("foo"))
-		assert.same("myvalue", span:get_baggage("mykey"))
+		span:set_baggage_item("mykey", "myvalue")
+		assert.same("bar", span:get_baggage_item("foo"))
+		assert.same("myvalue", span:get_baggage_item("mykey"))
 		-- Set same key again and make sure it has changed
-		span:set_baggage("foo", "other")
-		assert.same("other", span:get_baggage("foo"))
+		span:set_baggage_item("foo", "other")
+		assert.same("other", span:get_baggage_item("foo"))
 	end)
 	it("can iterate over baggage", function()
 		local span = new_span(tracer, context, "foo", 0)
@@ -171,10 +171,10 @@ describe("opentracing.span", function()
 			["baggage2"] = "value2";
 		}
 		for k, v in pairs(baggage) do
-			span:set_baggage(k, v)
+			span:set_baggage_item(k, v)
 		end
 		local seen = {}
-		for k, v in span:each_baggage() do
+		for k, v in span:each_baggage_item() do
 			seen[k] = v
 		end
 		assert.same(baggage, seen)

@@ -28,9 +28,9 @@ describe("opentracing.span_context", function()
 			somekey = "some value";
 		}
 		local context = new_context(nil, nil, nil, nil, baggage_arg)
-		assert.same("bar", context:get_baggage("foo"))
-		assert.same("some value", context:get_baggage("somekey"))
+		assert.same("bar", context:get_baggage_item("foo"))
+		assert.same("some value", context:get_baggage_item("somekey"))
 		baggage_arg.modified = "other"
-		assert.same(nil, context:get_baggage("modified"))
+		assert.same(nil, context:get_baggage_item("modified"))
 	end)
 end)

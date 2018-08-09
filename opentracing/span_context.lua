@@ -95,7 +95,7 @@ function span_context_methods:clone_with_baggage_item(key, value)
 	}, span_context_mt)
 end
 
-function span_context_methods:get_baggage(key)
+function span_context_methods:get_baggage_item(key)
 	assert(type(key) == "string", "invalid baggage key")
 	local baggage = self.baggage
 	if baggage == nil then
@@ -105,7 +105,7 @@ function span_context_methods:get_baggage(key)
 	end
 end
 
-function span_context_methods:each_baggage()
+function span_context_methods:each_baggage_item()
 	local baggage = self.baggage
 	if baggage == nil then return function() end end
 	return next, baggage
