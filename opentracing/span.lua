@@ -22,7 +22,7 @@ local function new(tracer, context, name, start_timestamp)
 	assert(type(name) == "string", "name should be a string")
 	assert(type(start_timestamp) == "number", "invalid starting timestamp")
 	return setmetatable({
-		tracer = tracer;
+		tracer_ = tracer;
 		context = context;
 		name = name;
 		timestamp = start_timestamp;
@@ -35,8 +35,12 @@ local function new(tracer, context, name, start_timestamp)
 	}, span_mt)
 end
 
+function span_methods:tracer()
+	return self.tracer_
+end
+
 function span_methods:start_child_span(name, start_timestamp)
-	return self.tracer:start_span(name, {
+	return self.tracer_:start_span(name, {
 		start_timestamp = start_timestamp;
 		child_of = self;
 	})
@@ -45,7 +49,7 @@ end
 function span_methods:finish(finish_timestamp)
 	assert(self.duration == nil, "span already finished")
 	if finish_timestamp == nil then
-		self.duration = self.tracer:time() - self.timestamp
+		self.duration = self.tracer_:time() - self.timestamp
 	else
 		assert(type(finish_timestamp) == "number")
 		local duration = finish_timestamp - self.timestamp
@@ -53,7 +57,7 @@ function span_methods:finish(finish_timestamp)
 		self.duration = duration
 	end
 	if self.context.should_sample then
-		self.tracer:report(self)
+		self.tracer_:report(self)
 	end
 	return true
 end
@@ -97,7 +101,7 @@ function span_methods:log(key, value, timestamp)
 	assert(type(key) == "string", "invalid log key")
 	-- `value` is allowed to be anything.
 	if timestamp == nil then
-		timestamp = self.tracer:time()
+		timestamp = self.tracer_:time()
 	else
 		assert(type(timestamp) == "number", "invalid timestamp for log")
 	end
