@@ -52,7 +52,7 @@ function tracer_methods:start_span(name, options)
 		if child_of ~= nil then
 			assert(references == nil, "cannot specify both references and child_of")
 			if opentracing_span.is(child_of) then
-				child_of = child_of.context
+				child_of = child_of:context()
 			else
 				assert(opentracing_span_context.is(child_of), "child_of should be a span or span context")
 			end
@@ -118,7 +118,7 @@ end
 
 function tracer_methods:inject(context, format, carrier)
 	if opentracing_span.is(context) then
-		context = context.context
+		context = context:context()
 	else
 		assert(opentracing_span_context.is(context), "context should be a span or span context")
 	end

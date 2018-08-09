@@ -78,7 +78,7 @@ describe("opentracing.tracer", function()
 		local tracer = new_tracer()
 		local span1 = tracer:start_span("foo")
 		tracer:start_span("bar", {
-			child_of = span1.context
+			child_of = span1:context()
 		})
 	end)
 	it("doesn't allow invalid child_of", function()
@@ -120,7 +120,7 @@ describe("opentracing.tracer", function()
 		tracer:register_injector("my_type", mock_injector)
 
 		local span = tracer:start_span("foo")
-		local context = span.context
+		local context = span:context()
 		local carrier = {}
 		tracer:inject(context, "my_type", carrier)
 		assert.stub(mock_injector).was.called_with(context, carrier)
@@ -130,7 +130,7 @@ describe("opentracing.tracer", function()
 		local mock_injector = stub()
 		tracer:register_injector("my_type", mock_injector)
 		local span = tracer:start_span("foo")
-		local context = span.context
+		local context = span:context()
 		local carrier = {}
 		tracer:inject(span, "my_type", carrier)
 		assert.stub(mock_injector).was.called_with(context, carrier)
@@ -138,7 +138,7 @@ describe("opentracing.tracer", function()
 	it("checks for known injector", function()
 		local tracer = new_tracer()
 		local span = tracer:start_span("foo")
-		local context = span.context
+		local context = span:context()
 		assert.has.errors(function()
 			tracer:inject(context, "my_unknown_type", {})
 		end)

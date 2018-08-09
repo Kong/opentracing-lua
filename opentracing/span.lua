@@ -23,7 +23,7 @@ local function new(tracer, context, name, start_timestamp)
 	assert(type(start_timestamp) == "number", "invalid starting timestamp")
 	return setmetatable({
 		tracer_ = tracer;
-		context = context;
+		context_ = context;
 		name = name;
 		timestamp = start_timestamp;
 		duration = nil;
@@ -33,6 +33,10 @@ local function new(tracer, context, name, start_timestamp)
 		logs = nil;
 		n_logs = 0;
 	}, span_mt)
+end
+
+function span_methods:context()
+	return self.context_
 end
 
 function span_methods:tracer()
@@ -56,7 +60,7 @@ function span_methods:finish(finish_timestamp)
 		assert(duration >= 0, "invalid finish timestamp")
 		self.duration = duration
 	end
-	if self.context.should_sample then
+	if self.context_.should_sample then
 		self.tracer_:report(self)
 	end
 	return true
@@ -139,17 +143,17 @@ end
 
 function span_methods:set_baggage(key, value)
 	-- Create new context so that baggage is immutably passed around
-	local newcontext = self.context:clone_with_baggage_item(key, value)
-	self.context = newcontext
+	local newcontext = self.context_:clone_with_baggage_item(key, value)
+	self.context_ = newcontext
 	return true
 end
 
 function span_methods:get_baggage(key)
-	return self.context:get_baggage(key)
+	return self.context_:get_baggage(key)
 end
 
 function span_methods:each_baggage()
-	return self.context:each_baggage()
+	return self.context_:each_baggage()
 end
 
 return {
