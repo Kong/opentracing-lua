@@ -1,20 +1,18 @@
-package = "opentracing"
-version = "scm-0"
+package = "opentracing-openresty"
+version = "0.1"
 
 source = {
-	url = "git+https://github.com/kong/opentracing-lua.git";
+	url = "git+https://github.com/iresty/opentracing-openresty.git";
 }
 
 description = {
 	summary = "Lua platform API for OpenTracing";
-	homepage = "https://github.com/kong/opentracing-lua";
+	homepage = "https://github.com/iresty/opentracing-openresty";
 	license = "Apache 2.0";
 }
 
 dependencies = {
-	"lua >= 5.1";
-	"luatz";
-	"luaossl";
+	"lua >= 5.1"
 }
 
 build = {

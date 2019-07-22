@@ -192,6 +192,6 @@ function span_methods:each_baggage_item()
 end
 
 return {
-	new = new;
-	is = is;
+	new = new,
+	is = is,
 }

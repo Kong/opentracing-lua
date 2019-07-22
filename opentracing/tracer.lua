@@ -1,4 +1,4 @@
-local gettime = require "luatz.gettime".gettime
+local ngx = ngx
 local opentracing_span = require "opentracing.span"
 local opentracing_span_context = require "opentracing.span_context"
 
@@ -95,7 +95,8 @@ end
 -- Spans belonging to this tracer will get timestamps via this method
 -- Can be overridden for e.g. testing
 function tracer_methods:time() -- luacheck: ignore 212
-	return gettime()
+	ngx.update_time()
+	return ngx.time()
 end
 
 function tracer_methods:report(span)
@@ -138,6 +139,6 @@ function tracer_methods:extract(format, carrier)
 end
 
 return {
-	new = new;
-	is = is;
+	new = new,
+	is = is,
 }
